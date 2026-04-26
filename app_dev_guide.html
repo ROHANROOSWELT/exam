@@ -1,0 +1,535 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-mono, monospace); }
+.container { padding: 1rem 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; }
+.tab { padding: 5px 11px; font-size: 12px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); font-family: var(--font-mono); transition: all 0.15s; }
+.tab:hover { background: var(--color-background-secondary); }
+.tab.active { background: var(--color-background-tertiary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.step { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.step-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); border: 0.5px solid var(--color-border-secondary); }
+.step-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+.cmd { display: block; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 12px; color: var(--color-text-primary); font-family: var(--font-mono); margin: 6px 0; white-space: pre-wrap; word-break: break-all; }
+.badge { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: var(--border-radius-md); font-weight: 500; margin-bottom: 8px; }
+.badge-android { background: #E1F5EE; color: #0F6E56; }
+.badge-web { background: #E6F1FB; color: #185FA5; }
+.badge-rn { background: #FAECE7; color: #993C1D; }
+.badge-flutter { background: #EEEDFE; color: #534AB7; }
+.badge-ionic { background: #FAEEDA; color: #854F0B; }
+.sec-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.sec-sub { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 12px; }
+.tip { background: var(--color-background-info); border-left: 2px solid; border-color: var(--color-border-info); border-radius: 0; padding: 8px 12px; font-size: 12px; color: var(--color-text-info); margin-top: 8px; }
+hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 12px 0; }
+</style>
+
+<div class="container">
+<div class="tabs">
+  <div class="tab active" onclick="show('android1')">1. UI Change</div>
+  <div class="tab" onclick="show('android2')">2. Calculator</div>
+  <div class="tab" onclick="show('android3')">3. Email+Notif</div>
+  <div class="tab" onclick="show('android4')">4. SQLite</div>
+  <div class="tab" onclick="show('cordova1')">5. Cordova Login</div>
+  <div class="tab" onclick="show('cordova2')">6. Location</div>
+  <div class="tab" onclick="show('ionic1')">7. Ionic Recipe</div>
+  <div class="tab" onclick="show('rn1')">8. RN BMI</div>
+  <div class="tab" onclick="show('flutter1')">9. Flutter Expense</div>
+  <div class="tab" onclick="show('react1')">10. React Converter</div>
+  <div class="tab" onclick="show('react2')">11. React To-Do</div>
+</div>
+
+<div id="android1" class="section active">
+  <div class="card">
+    <span class="badge badge-android">Android Studio</span>
+    <div class="sec-title">UI Change App</div>
+    <div class="sec-sub">Changes background color, text size, and bold on button click</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Install <b>Android Studio</b> from developer.android.com/studio</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Open Android Studio → <b>New Project</b> → Empty Views Activity → Language: Java → Finish</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Open <code>res/layout/activity_main.xml</code> → switch to Code view → paste XML below</div></div>
+    <div class="cmd">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"&gt;
+
+    &lt;TextView
+        android:id="@+id/t"
+        android:text="Hello World"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/&gt;
+
+    &lt;Button
+        android:id="@+id/b"
+        android:text="Change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/&gt;
+&lt;/LinearLayout&gt;</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Open <code>java/com.example.app/MainActivity.java</code> → replace all content</div></div>
+    <div class="cmd">package com.example.app;
+import android.graphics.*;
+import android.os.Bundle;
+import android.widget.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    protected void onCreate(Bundle b){
+        super.onCreate(b);
+        setContentView(R.layout.activity_main);
+        Button btn = findViewById(R.id.b);
+        TextView t = findViewById(R.id.t);
+        LinearLayout l = findViewById(R.id.layout);
+        btn.setOnClickListener(v -> {
+            l.setBackgroundColor(Color.YELLOW);
+            t.setTextSize(30);
+            t.setTypeface(null, Typeface.BOLD);
+        });
+    }
+}</div>
+    <div class="step"><div class="step-num">5</div><div class="step-text">Click ▶ Run (Shift+F10) → Select emulator or USB device → App opens, click "Change" button</div></div>
+    <div class="tip">If no emulator: Tools → Device Manager → Create Virtual Device → Pixel 4 → API 30</div>
+  </div>
+</div>
+
+<div id="android2" class="section">
+  <div class="card">
+    <span class="badge badge-android">Android Studio</span>
+    <div class="sec-title">Android Calculator</div>
+    <div class="sec-sub">Takes two numbers, adds them on button click</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">New Project → Empty Views Activity → Java</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Paste in <code>activity_main.xml</code>:</div></div>
+    <div class="cmd">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"&gt;
+    &lt;EditText android:id="@+id/e1" android:hint="Enter A"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/&gt;
+    &lt;EditText android:id="@+id/e2" android:hint="Enter B"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/&gt;
+    &lt;Button android:id="@+id/add" android:text="Add"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/&gt;
+    &lt;TextView android:id="@+id/result"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/&gt;
+&lt;/LinearLayout&gt;</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">In <code>MainActivity.java</code> inside <code>onCreate()</code> after <code>setContentView()</code>:</div></div>
+    <div class="cmd">Button add = findViewById(R.id.add);
+EditText e1 = findViewById(R.id.e1);
+EditText e2 = findViewById(R.id.e2);
+TextView r = findViewById(R.id.result);
+add.setOnClickListener(v -> {
+    int a = Integer.parseInt(e1.getText().toString());
+    int b = Integer.parseInt(e2.getText().toString());
+    r.setText("Result: " + (a + b));
+});</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Run → Enter numbers → Tap Add</div></div>
+  </div>
+</div>
+
+<div id="android3" class="section">
+  <div class="card">
+    <span class="badge badge-android">Android Studio</span>
+    <div class="sec-title">Email + Notification</div>
+    <div class="sec-sub">Send email intent and show system notification</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">New Project → Java. In <code>activity_main.xml</code>, add two buttons with ids <code>email</code> and <code>notify</code></div></div>
+    <div class="cmd">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="20dp"
+    android:layout_width="match_parent" android:layout_height="match_parent"&gt;
+    &lt;Button android:id="@+id/email" android:text="Send Email"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/&gt;
+    &lt;Button android:id="@+id/notify" android:text="Notify"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/&gt;
+&lt;/LinearLayout&gt;</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Add to <code>AndroidManifest.xml</code> inside &lt;application&gt;:</div></div>
+    <div class="cmd">&lt;uses-permission android:name="android.permission.POST_NOTIFICATIONS"/&gt;</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">In <code>MainActivity.java</code>, add imports and code:</div></div>
+    <div class="cmd">import android.app.*;
+import android.content.Intent;
+import androidx.core.app.NotificationCompat;
+
+// In onCreate, create channel first:
+NotificationChannel ch = new NotificationChannel("ch","Default",
+    NotificationManager.IMPORTANCE_DEFAULT);
+((NotificationManager)getSystemService(NOTIFICATION_SERVICE))
+    .createNotificationChannel(ch);
+
+Button email = findViewById(R.id.email);
+Button notify = findViewById(R.id.notify);
+
+email.setOnClickListener(v -> {
+    Intent i = new Intent(Intent.ACTION_SEND);
+    i.setType("text/plain");
+    startActivity(i);
+});
+
+notify.setOnClickListener(v -> {
+    NotificationManager nm =
+        (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+    NotificationCompat.Builder nb =
+        new NotificationCompat.Builder(this,"ch")
+        .setContentTitle("New Message")
+        .setContentText("Hello User")
+        .setSmallIcon(android.R.drawable.ic_dialog_info);
+    nm.notify(1, nb.build());
+});</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Run → Tap buttons to test</div></div>
+    <div class="tip">On Android 13+, grant notification permission when prompted on first run</div>
+  </div>
+</div>
+
+<div id="android4" class="section">
+  <div class="card">
+    <span class="badge badge-android">Android Studio</span>
+    <div class="sec-title">SQLite Library App</div>
+    <div class="sec-sub">Creates database, inserts books, reads and displays them</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">New Project → Java. In <code>activity_main.xml</code>, add a TextView with id <code>text</code></div></div>
+    <div class="cmd">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="20dp"
+    android:layout_width="match_parent" android:layout_height="match_parent"&gt;
+    &lt;TextView android:id="@+id/text"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/&gt;
+&lt;/LinearLayout&gt;</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">In <code>MainActivity.java</code> inside <code>onCreate()</code>:</div></div>
+    <div class="cmd">import android.database.*;
+import android.database.sqlite.*;
+
+SQLiteDatabase db = openOrCreateDatabase("lib", MODE_PRIVATE, null);
+db.execSQL("CREATE TABLE IF NOT EXISTS books(name TEXT)");
+db.execSQL("INSERT INTO books VALUES('Java')");
+db.execSQL("INSERT INTO books VALUES('Python')");
+
+Cursor c = db.rawQuery("SELECT * FROM books", null);
+String data = "";
+while(c.moveToNext()){
+    data += c.getString(0) + "\n";
+}
+
+TextView t = findViewById(R.id.text);
+t.setText(data);</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Run → Books will display on screen</div></div>
+    <div class="tip">No extra dependencies needed — SQLite is built into Android</div>
+  </div>
+</div>
+
+<div id="cordova1" class="section">
+  <div class="card">
+    <span class="badge badge-web">Apache Cordova</span>
+    <div class="sec-title">Cordova Login App</div>
+    <div class="sec-sub">Username/password login with admin/123 credentials</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Install Node.js from nodejs.org, then install Cordova:</div></div>
+    <div class="cmd">npm install -g cordova</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Create and setup project:</div></div>
+    <div class="cmd">cordova create LoginApp com.example.login LoginApp
+cd LoginApp
+cordova platform add browser</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Open <code>www/index.html</code> → replace entire content:</div></div>
+    <div class="cmd">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;Login&lt;/h2&gt;
+&lt;input id="u" placeholder="Username"&gt;&lt;br&gt;&lt;br&gt;
+&lt;input id="p" type="password" placeholder="Password"&gt;&lt;br&gt;&lt;br&gt;
+&lt;button onclick="login()"&gt;Login&lt;/button&gt;
+&lt;button onclick="reset()"&gt;Reset&lt;/button&gt;
+&lt;p id="msg"&gt;&lt;/p&gt;
+&lt;script&gt;
+function login(){
+  let u=document.getElementById("u").value;
+  let p=document.getElementById("p").value;
+  if(u=="admin" &amp;&amp; p=="123")
+    document.getElementById("msg").innerHTML="Login Success";
+  else
+    document.getElementById("msg").innerHTML="Login Failed";
+}
+function reset(){
+  document.getElementById("u").value="";
+  document.getElementById("p").value="";
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Run in browser:</div></div>
+    <div class="cmd">cordova run browser</div>
+    <div class="tip">Username: admin | Password: 123</div>
+  </div>
+</div>
+
+<div id="cordova2" class="section">
+  <div class="card">
+    <span class="badge badge-web">Apache Cordova</span>
+    <div class="sec-title">Cordova Geolocation</div>
+    <div class="sec-sub">Gets and displays device latitude and longitude</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Create Cordova project and add geolocation plugin:</div></div>
+    <div class="cmd">cordova create GeoApp com.example.geo GeoApp
+cd GeoApp
+cordova platform add browser
+cordova plugin add cordova-plugin-geolocation</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Replace <code>www/index.html</code>:</div></div>
+    <div class="cmd">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;My Location&lt;/h2&gt;
+&lt;button onclick="getLocation()"&gt;Get Location&lt;/button&gt;
+&lt;p id="out"&gt;&lt;/p&gt;
+&lt;script&gt;
+function getLocation(){
+  navigator.geolocation.getCurrentPosition(pos=&gt;{
+    document.getElementById("out").innerHTML =
+      "Lat: "+pos.coords.latitude +
+      "&lt;br&gt;Lon: "+pos.coords.longitude;
+  });
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Run:</div></div>
+    <div class="cmd">cordova run browser</div>
+    <div class="tip">Browser will ask permission to access location — click Allow</div>
+  </div>
+</div>
+
+<div id="ionic1" class="section">
+  <div class="card">
+    <span class="badge badge-ionic">Ionic + React</span>
+    <div class="sec-title">Recipe Finder App</div>
+    <div class="sec-sub">Enter ingredient → displays recipe name</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Install Ionic CLI:</div></div>
+    <div class="cmd">npm install -g @ionic/cli</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Create project:</div></div>
+    <div class="cmd">ionic start RecipeApp blank --type=react
+cd RecipeApp</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Open <code>src/App.tsx</code> → replace content:</div></div>
+    <div class="cmd">import { useState } from 'react';
+import { IonApp, IonContent, IonInput,
+         IonButton, IonText } from '@ionic/react';
+import '@ionic/react/css/core.css';
+
+export default function App(){
+  const [item,setItem]=useState('');
+  const [res,setRes]=useState('');
+
+  return(
+    &lt;IonApp&gt;
+      &lt;IonContent className="ion-padding"&gt;
+        &lt;h2&gt;Recipe Finder&lt;/h2&gt;
+        &lt;IonInput placeholder="Enter ingredient"
+          onIonChange={e=&gt;setItem(e.detail.value||'')} /&gt;
+        &lt;IonButton expand="full"
+          onClick={()=&gt;setRes(item+" Recipe")}&gt;
+          Find Recipe
+        &lt;/IonButton&gt;
+        &lt;IonText&gt;&lt;h3&gt;{res}&lt;/h3&gt;&lt;/IonText&gt;
+      &lt;/IonContent&gt;
+    &lt;/IonApp&gt;
+  );
+}</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Run in browser:</div></div>
+    <div class="cmd">ionic serve</div>
+    <div class="tip">Opens at http://localhost:8100 automatically</div>
+  </div>
+</div>
+
+<div id="rn1" class="section">
+  <div class="card">
+    <span class="badge badge-rn">React Native</span>
+    <div class="sec-title">BMI Calculator</div>
+    <div class="sec-sub">Enter height (m) and weight (kg) → calculates BMI</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Install Node.js. Then create project using Expo (easiest method):</div></div>
+    <div class="cmd">npx create-expo-app BMIApp
+cd BMIApp</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Open <code>App.js</code> → replace all content:</div></div>
+    <div class="cmd">import {useState} from 'react';
+import {View,Text,TextInput,Button,StyleSheet} from 'react-native';
+
+export default function App(){
+  const[h,setH]=useState('');
+  const[w,setW]=useState('');
+  const[bmi,setBmi]=useState('');
+
+  return(
+    &lt;View style={styles.container}&gt;
+      &lt;Text style={styles.title}&gt;BMI Calculator&lt;/Text&gt;
+      &lt;TextInput style={styles.input}
+        placeholder="Height in meters (e.g. 1.75)"
+        onChangeText={setH} keyboardType="numeric"/&gt;
+      &lt;TextInput style={styles.input}
+        placeholder="Weight in kg (e.g. 70)"
+        onChangeText={setW} keyboardType="numeric"/&gt;
+      &lt;Button title="Calculate BMI"
+        onPress={()=&gt;setBmi((w/(h*h)).toFixed(2))}/&gt;
+      &lt;Text style={styles.result}&gt;BMI: {bmi}&lt;/Text&gt;
+    &lt;/View&gt;
+  );
+}
+
+const styles = StyleSheet.create({
+  container:{flex:1,padding:20,marginTop:50},
+  title:{fontSize:24,fontWeight:'bold',marginBottom:20},
+  input:{borderWidth:1,borderColor:'#ccc',padding:10,
+         marginBottom:10,borderRadius:5},
+  result:{fontSize:20,marginTop:20,fontWeight:'bold'}
+});</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Run:</div></div>
+    <div class="cmd">npx expo start</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Scan QR code with <b>Expo Go</b> app (Android/iOS) OR press <code>w</code> for web browser</div></div>
+    <div class="tip">Install Expo Go from Play Store/App Store for real device testing</div>
+  </div>
+</div>
+
+<div id="flutter1" class="section">
+  <div class="card">
+    <span class="badge badge-flutter">Flutter</span>
+    <div class="sec-title">Expense Manager</div>
+    <div class="sec-sub">Add expense items to a list with a text field</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Install Flutter SDK from flutter.dev → Add to PATH → Run:</div></div>
+    <div class="cmd">flutter doctor</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Create project:</div></div>
+    <div class="cmd">flutter create expense_app
+cd expense_app</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Open <code>lib/main.dart</code> → replace entire content:</div></div>
+    <div class="cmd">import 'package:flutter/material.dart';
+
+void main() =&gt; runApp(MaterialApp(home: Home()));
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() =&gt; _HomeState();
+}
+
+class _HomeState extends State&lt;Home&gt; {
+  TextEditingController c = TextEditingController();
+  List&lt;String&gt; list = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Expense Manager")),
+      body: Column(children: [
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: TextField(
+            controller: c,
+            decoration: InputDecoration(
+              labelText: 'Enter expense',
+              border: OutlineInputBorder(),
+            ),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() =&gt; list.add(c.text));
+            c.clear();
+          },
+          child: Text("Add Expense"),
+        ),
+        Expanded(
+          child: ListView(
+            children: list.map((e) =&gt; ListTile(
+              leading: Icon(Icons.attach_money),
+              title: Text(e),
+            )).toList(),
+          ),
+        )
+      ]),
+    );
+  }
+}</div>
+    <div class="step"><div class="step-num">4</div><div class="step-text">Run:</div></div>
+    <div class="cmd">flutter run</div>
+    <div class="tip">Use <code>flutter run -d chrome</code> to run in browser if no emulator available</div>
+  </div>
+</div>
+
+<div id="react1" class="section">
+  <div class="card">
+    <span class="badge badge-web">React.js</span>
+    <div class="sec-title">KM to Miles Converter</div>
+    <div class="sec-sub">Real-time unit converter — type KM, see Miles</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Create React app:</div></div>
+    <div class="cmd">npx create-react-app converter
+cd converter</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Open <code>src/App.js</code> → replace all content:</div></div>
+    <div class="cmd">import {useState} from 'react';
+
+function App(){
+  const[v,setV]=useState('');
+
+  return(
+    &lt;div style={{padding:'20px'}}&gt;
+      &lt;h2&gt;KM to Miles Converter&lt;/h2&gt;
+      &lt;input
+        type="number"
+        placeholder="Enter KM"
+        onChange={e=&gt;setV(e.target.value)}
+        style={{padding:'8px',fontSize:'16px'}}
+      /&gt;
+      &lt;h3&gt;Miles: {v ? (v*0.62).toFixed(2) : 0}&lt;/h3&gt;
+    &lt;/div&gt;
+  );
+}
+export default App;</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Start the app:</div></div>
+    <div class="cmd">npm start</div>
+    <div class="tip">Opens at http://localhost:3000 — type any KM value to see miles instantly</div>
+  </div>
+</div>
+
+<div id="react2" class="section">
+  <div class="card">
+    <span class="badge badge-web">React.js</span>
+    <div class="sec-title">To-Do List App</div>
+    <div class="sec-sub">Add tasks, display them in a list</div>
+    <div class="step"><div class="step-num">1</div><div class="step-text">Create React app (skip if already created):</div></div>
+    <div class="cmd">npx create-react-app todo-app
+cd todo-app</div>
+    <div class="step"><div class="step-num">2</div><div class="step-text">Open <code>src/App.js</code> → replace all content:</div></div>
+    <div class="cmd">import {useState} from 'react';
+
+function App(){
+  const[t,setT]=useState('');
+  const[l,setL]=useState([]);
+
+  return(
+    &lt;div style={{padding:'20px'}}&gt;
+      &lt;h2&gt;To-Do List&lt;/h2&gt;
+      &lt;input
+        value={t}
+        onChange={e=&gt;setT(e.target.value)}
+        placeholder="Enter a task"
+        style={{padding:'8px',fontSize:'16px'}}
+      /&gt;
+      &lt;button
+        onClick={()=&gt;{ setL([...l,t]); setT(''); }}
+        style={{padding:'8px 16px',marginLeft:'8px'}}
+      &gt;
+        Add
+      &lt;/button&gt;
+      &lt;ul&gt;
+        {l.map((x,i)=&gt;&lt;li key={i}&gt;{x}&lt;/li&gt;)}
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  );
+}
+export default App;</div>
+    <div class="step"><div class="step-num">3</div><div class="step-text">Run:</div></div>
+    <div class="cmd">npm start</div>
+    <div class="tip">Type a task and press Add — items appear in list below</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
