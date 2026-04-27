@@ -197,21 +197,53 @@ notify.setOnClickListener(v -> {
 &lt;/LinearLayout&gt;</div>
     <div class="step"><div class="step-num">2</div><div class="step-text">In <code>MainActivity.java</code> inside <code>onCreate()</code>:</div></div>
     <div class="cmd">import android.database.*;
-import android.database.sqlite.*;
+package com.example.myapplication;
 
-SQLiteDatabase db = openOrCreateDatabase("lib", MODE_PRIVATE, null);
-db.execSQL("CREATE TABLE IF NOT EXISTS books(name TEXT)");
-db.execSQL("INSERT INTO books VALUES('Java')");
-db.execSQL("INSERT INTO books VALUES('Python')");
+import android.os.Bundle;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
-Cursor c = db.rawQuery("SELECT * FROM books", null);
-String data = "";
-while(c.moveToNext()){
-    data += c.getString(0) + "\n";
-}
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
-TextView t = findViewById(R.id.text);
-t.setText(data);</div>
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Open/Create DB
+        SQLiteDatabase db = openOrCreateDatabase("lib", MODE_PRIVATE, null);
+
+        // Create table
+        db.execSQL("CREATE TABLE IF NOT EXISTS books(name TEXT)");
+
+        // ⚠️ FIX 1: Prevent duplicate inserts
+        db.execSQL("DELETE FROM books");
+
+        // Insert data
+        db.execSQL("INSERT INTO books VALUES('Java')");
+        db.execSQL("INSERT INTO books VALUES('Python')");
+
+        // Fetch data
+        Cursor c = db.rawQuery("SELECT * FROM books", null);
+
+        // ⚠️ FIX 2: Use StringBuilder (efficient)
+        StringBuilder data = new StringBuilder();
+
+        while (c.moveToNext()) {
+            data.append(c.getString(0)).append("\n");
+        }
+
+        // ⚠️ FIX 3: Close cursor
+        c.close();
+
+        // Display
+        TextView t = findViewById(R.id.text);
+        t.setText(data.toString());
+    }
+}</div>
     <div class="step"><div class="step-num">3</div><div class="step-text">Run → Books will display on screen</div></div>
     <div class="tip">No extra dependencies needed — SQLite is built into Android</div>
   </div>
